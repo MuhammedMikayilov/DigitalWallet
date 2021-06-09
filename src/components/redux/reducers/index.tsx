@@ -1,7 +1,7 @@
-import React from "react";
+import { combineReducers } from "redux";
+import { reducerCards } from "./cards";
 
-function index() {
-  return <div></div>;
-}
-
-export default index;
+const reducer = combineReducers({
+  cards: reducerCards!,
+});
+export default reducer;

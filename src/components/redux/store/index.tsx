@@ -1,7 +1,7 @@
-import React from "react";
+import { applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
+import { createStore } from "redux";
+import reducer from "../reducers";
 
-function index() {
-  return <div></div>;
-}
-
-export default index;
+export const store = createStore(reducer, applyMiddleware(thunk, logger));
