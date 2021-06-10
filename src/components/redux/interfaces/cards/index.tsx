@@ -1,4 +1,5 @@
 interface ICurrency {
+  key: string;
   currency: string;
   value: number;
 }

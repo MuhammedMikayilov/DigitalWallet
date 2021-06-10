@@ -1,3 +1,4 @@
+import { ICards } from "../../../components/redux/interfaces/cards";
 import { HttpClient } from "../../HttpClient";
 
 class CardsService extends HttpClient {
@@ -6,15 +7,15 @@ class CardsService extends HttpClient {
   }
 
   getCards() {
-    return this.get("cards");
+    return this.get("card");
   }
 
-  postSongs(body: FormData) {
-    return this.post("cards", body);
+  addCards(body: ICards) {
+    return this.post("card", body);
   }
 
   deleteSong(id: string) {
-    return this.delete("cards", id);
+    return this.delete("card", id);
   }
 }
 export const cardsService = new CardsService();
