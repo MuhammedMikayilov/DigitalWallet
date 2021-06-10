@@ -5,6 +5,7 @@ interface ICurrency {
 }
 
 export interface ICards {
+  _id: string;
   wal_num: number;
   exp_date: string;
   cvv: string;

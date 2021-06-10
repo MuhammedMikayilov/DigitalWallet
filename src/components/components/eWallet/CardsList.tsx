@@ -12,6 +12,7 @@ import { Avatar, ListItemAvatar } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import { ICards } from "../../redux/interfaces/cards";
+import { useHistory } from "react-router";
 
 interface IProp {
   classes: ClassNameMap<
@@ -29,6 +30,7 @@ interface ICard {
 }
 const CardsList: React.FC<IProp> = ({ classes }) => {
   const { cards } = useSelector((state: ICard) => state.cards);
+  const { push } = useHistory();
   return (
     <main className={classes.content}>
       <div className={classes.toolbar} />
@@ -39,7 +41,7 @@ const CardsList: React.FC<IProp> = ({ classes }) => {
               <Grid item md={4} style={{ background: "white" }}>
                 <ListItem>
                   <ListItemText
-                    onClick={() => console.log(card)}
+                    onClick={() => push(`/cards/${card._id}`)}
                     primary={card.bank_name}
                     secondary={`Balance: ${card.currency_type.currency} ${card.currency_type.value} `}
                     style={{ cursor: "pointer" }}
