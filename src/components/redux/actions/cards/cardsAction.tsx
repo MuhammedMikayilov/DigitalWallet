@@ -1,6 +1,6 @@
 import { ACTION_TYPES } from "../actionTypes";
 import { cardsService } from "../../../../Api/Service/Cards/index";
-import { ICards } from "../../interfaces/cards";
+import { ICards } from "../../interfaces/cards/index";
 
 export const getCardsDetail = () => (dispatch: Function) => {
   cardsService.getCards().then(({ data }) => {
