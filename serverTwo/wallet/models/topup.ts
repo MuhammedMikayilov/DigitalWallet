@@ -6,7 +6,7 @@ const topupSchema = new Schema({
     type: Object
   },
   amount: {
-    type: Number,
+    type: Object,
     required: true,
    
   }

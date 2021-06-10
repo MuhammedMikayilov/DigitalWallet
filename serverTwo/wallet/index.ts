@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import { Card, Playlist } from './models'
+import { Card, Topup } from './models'
 import { ICardPayload, ITopupPayload } from './mmodels'
 
 export const CardRouter = express.Router()
@@ -16,12 +16,21 @@ CardRouter.get('/', async (req: Request, res: Response) => {
 //create
 CardRouter.post('/', async (req: Request, res: Response) => {
   const cardPayload: ICardPayload = {
-    ...req.body
+    ...req.body,
   }
   const card = new Card(cardPayload)
   try {
-    const newCard = await card.save()
-    res.status(200).json(newCard)
+    const newCard = await card.save();
+
+    res.status(200).json({
+     wal_num:"**** **** **** "+newCard.wal_num.split(' ')[3],
+     exp_date:newCard.exp_date,
+     cvv: newCard.cvv,
+     bank_name: newCard.bank_name,
+     card_type: newCard.card_type,
+     currency_type:newCard.currency_type
+
+})
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -83,7 +92,7 @@ export const TopupRouter = express.Router()
 // get
 TopupRouter.get('/', async (req: Request, res: Response) => {
   try {
-    const list = await Playlist.find()
+    const list = await Topup.find()
     res.status(200).json(list)
   } catch (error) {
     res.status(500).json({ mesage: error.mesage })
@@ -95,7 +104,7 @@ TopupRouter.post('/', async (req: Request, res: Response) => {
   const listPayload: ITopupPayload = {
     ...req.body
   }
-  const event = new Playlist(listPayload)
+  const event = new Topup(listPayload)
   try {
     const newlist = await event.save()
     res.status(200).json(newlist)
@@ -108,7 +117,7 @@ TopupRouter.post('/', async (req: Request, res: Response) => {
 TopupRouter.delete('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params
-    const list = await Playlist.findById(id)
+    const list = await Topup.findById(id)
     if (!list) {
       res.status(404).json({ message: 'Not found' })
     } else {
@@ -125,14 +134,14 @@ TopupRouter.delete('/:id', async (req: Request, res: Response) => {
 TopupRouter.patch('/:id', async (req: Request, res: Response) => {
   const { id } = req.params
   try {
-    let list = await Playlist.findById(id)
+    let list = await Topup.findById(id)
     if (!list) {
       res.status(404).json({ message: 'Not found' })
     } else {
-      await Playlist.findByIdAndUpdate(id, req.body, {
+      await Topup.findByIdAndUpdate(id, req.body, {
         useFindAndModify: true
       })
-      list = await Playlist.findById(id)
+      list = await Topup.findById(id)
 
       res.json(list)
     }

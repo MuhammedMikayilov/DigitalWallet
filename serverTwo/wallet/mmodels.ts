@@ -14,6 +14,11 @@ export interface IPlaylist{
     songs:ISong[]
 }
 
+interface ICurrency{
+    currency:string;
+    value:number
+}
+
 export interface ICardPayload{
     
     wal_num:string;
@@ -21,13 +26,12 @@ export interface ICardPayload{
     cvv:number;
     bank_name:string;
     card_type:string;
-    currency_type:object;
+    currency_type:ICurrency;
 }
 
 export interface ITopupPayload{
   
-    name: string;
-    creation_date?:string;
-    author:string
-    songs:ISong[]
+    amount: object;
+    card_select:object;
+   
 }
