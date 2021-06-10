@@ -1,12 +1,12 @@
-import { CardRouter, TopupRouter } from './songs'
+import { CardRouter, TopupRouter } from "./wallet/index";
 
 export const ROUTES = [
   {
-    path: '/card',
-    router: CardRouter
+    path: "/card",
+    router: CardRouter,
   },
   {
-    path: '/topup',
-    router: TopupRouter
-  }
-]
+    path: "/topup",
+    router: TopupRouter,
+  },
+];
