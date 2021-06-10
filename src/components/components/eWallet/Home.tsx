@@ -92,7 +92,7 @@ export default function Home(props: Props) {
           </ListItem>
         <ListItem button key={4}>
             <ListItemIcon><InboxIcon /></ListItemIcon>
-            <ListItemText primary='TopUp' />
+            <ListItemText onClick={()=>history.push('/TopUp')} primary='TopUp' />
           </ListItem>
         <ListItem button key={5}>
             <ListItemIcon><MailIcon /></ListItemIcon>
