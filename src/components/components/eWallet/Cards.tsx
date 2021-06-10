@@ -22,7 +22,6 @@ import {
   createStyles,
 } from "@material-ui/core/styles";
 import Cards from "./Cards";
-import AddCard from "./AddCard";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { getCardsDetail } from "../../redux/actions/cards/cardsAction";
