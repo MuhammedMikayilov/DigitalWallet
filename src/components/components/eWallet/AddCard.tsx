@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ImageIcon from '@material-ui/icons/Image';
 import Divider from '@material-ui/core/Divider';
+import { useFormik } from 'formik';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,13 +27,13 @@ import { Avatar, Input, ListItemAvatar, TextField } from '@material-ui/core';
 const drawerWidth = 240;
 
 const SignupSchema = Yup.object().shape({
-  cardNumber: Yup.number()
-    .min(18, 'Card number must be 16 digits!')
-    .max(18, 'Card number must be 16 digits!')
+  cardNumber: Yup.string()
+    .min(16, 'Card number must be 16 digits!')
+    .max(16, 'Card number must be 16 digits!')
     .required('Required'),
   expireDate: Yup.string()
     .required('Required'),
-    cvv: Yup.number()
+    cvv: Yup.string()
     .min(3, 'CVV must be 3 digits!')
     .max(3, 'CVV must be 3 digits!')
     .required('Required'),
@@ -86,8 +87,6 @@ export default function AddCard(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  console.log(history);
-  
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -118,8 +117,18 @@ export default function AddCard(props: Props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
-
-  return (
+    const formik = useFormik({
+      initialValues:{
+        cardNumber: '',
+        expireDate: '',
+        cvv: '',
+      },
+      validationSchema:SignupSchema,
+      onSubmit:(values) => {
+        console.log(values);
+      }
+    });
+  return(
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -174,33 +183,21 @@ export default function AddCard(props: Props) {
         <Typography paragraph>
         <div>
      <h1>Add a new card</h1>
-     <Formik
-       initialValues={{
-         cardNumber: '',
-         expireDate: '',
-         cvv: '',
-       }}
-       validationSchema={SignupSchema}
-       onSubmit={values => {
-         console.log(values);
-       }}
-     >
-       {({ errors, touched }) => (
-         <form>
-           <TextField name="cardNumber" InputProps={{ inputProps: { max: 16 } }}/>
-           {errors.cardNumber && touched.cardNumber ? (
-             <div>{errors.cardNumber}</div>
-           ) : null}
-           <TextField name="expireDate" type="date"/>
-           {errors.expireDate && touched.expireDate ? (
-             <div>{errors.expireDate}</div>
-           ) : null}
-           <Input name="cvv" type="number"/>
-           {errors.cvv && touched.cvv ? <div>{errors.cvv}</div> : null}
+         <form onSubmit={formik.handleSubmit}>
+           <TextField name="cardNumber" type="number" value={formik.values.cardNumber}
+          onChange={formik.handleChange}
+          error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
+          helperText={formik.touched.cardNumber && formik.errors.cardNumber}/>
+           <TextField name="expireDate" type="date" value={formik.values.expireDate}
+          onChange={formik.handleChange}
+          error={formik.touched.expireDate && Boolean(formik.errors.expireDate)}
+          helperText={formik.touched.expireDate && formik.errors.expireDate}/>
+           <TextField name="cvv" type="number" value={formik.values.cvv}
+          onChange={formik.handleChange}
+          error={formik.touched.cvv && Boolean(formik.errors.cvv)}
+          helperText={formik.touched.cvv && formik.errors.cvv} />
            <button type="submit">Submit</button>
          </form>
-       )}
-     </Formik>
    </div>
         
         </Typography>
@@ -208,11 +205,3 @@ export default function AddCard(props: Props) {
     </div>
   );
 }
-
-
-
-
-
- 
-
- 
