@@ -15,8 +15,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+// import { useHistory } from "react-router-dom";
 import Cards from './Cards';
 import AddCard from './AddCard';
+import { useHistory } from 'react-router';
 
 const drawerWidth = 240;
 
@@ -56,10 +58,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 
@@ -68,22 +66,38 @@ export default function Home(props: Props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const history = useHistory();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+  console.log(history);
+  
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Cards', 'Add card', 'Topup', 'Post'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+      <ListItem button key={1}>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText onClick={()=>history.push('/')} primary='Home' />
           </ListItem>
-        ))}
+        <ListItem button key={2}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText onClick={()=>history.push('/cards')} primary='Cards' />
+          </ListItem>
+        <ListItem button key={3}>
+            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemText onClick={()=>history.push('/addCard')} primary='Add Card' />
+          </ListItem>
+        <ListItem button key={4}>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary='TopUp' />
+          </ListItem>
+        <ListItem button key={5}>
+            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemText primary='Post' />
+          </ListItem>
       </List>
     </div>
   );
@@ -141,10 +155,8 @@ export default function Home(props: Props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-        <div className={classes.toolbar}></div>
         <Typography paragraph>
-          <Cards/>
-          <AddCard/>
+            Hello
         </Typography>
       </main>
     </div>

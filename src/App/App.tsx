@@ -1,13 +1,19 @@
-import { Switch } from "@material-ui/core";
-import { Router } from "@material-ui/icons";
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import AddCard from "../components/components/eWallet/AddCard";
+import Cards from "../components/components/eWallet/Cards";
 import Home from "../components/components/eWallet/Home";
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <Router>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/cards' component={Cards} />
+          <Route path='/addCard' component={AddCard} />
+        </Switch>
+      </Router>
     </div>
   );
 }
